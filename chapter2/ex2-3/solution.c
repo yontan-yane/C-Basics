@@ -20,20 +20,18 @@ int32_t htoi(uint8_t *str)
             temp = (str[index_i]-'0');
             
         }
-        else if((str[index_i] >='A') || (str[index_i]<='F'))
+        else if((str[index_i] >='A' && str[index_i]<='F') || 
+        ((str[index_i] >='a') && (str[index_i]<='f') ))
         {
-            temp = ((str[index_i]-'A'))+10;
-        }
-        else if((str[index_i] >='a') || (str[index_i]<='f'))
-        {
-            temp = ((str[index_i]-'a'))+10;
+            temp = ((str[index_i]-'A') & (~('A' ^ 'a')))+10;
+
         }
         else
         {
-            break;
+           break;
         }
 
-        result = result *16 + temp; //for hexa 16, 
+        result = result *16 + temp; //for hex: 16, 
         index_i++;
     }
     return result;
@@ -46,7 +44,7 @@ int main(void) {
     printf("%d\n", htoi("0X3C"));   // Output: 60
     printf("%d\n", htoi("1A"));     // Output: 26
     printf("%d\n", htoi("A"));      // Output: 10
-    printf("%d\n", htoi("0"));      // Output: 0
+    printf("%d\n", htoi("0x80000000"));      // Output: -2147483648
     return 0;
 }
 
